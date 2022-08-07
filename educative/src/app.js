@@ -1,10 +1,7 @@
 import React from 'react';
 
-function doFilter(query) {
-    return function (user) {
-        return query === user.name;
-    }
-}
+const doFilter = query => user =>
+    query === user.name;
 
 export default class App extends React.Component {
 
