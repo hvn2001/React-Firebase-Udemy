@@ -1,5 +1,11 @@
 import React from 'react';
 
+function doFilter(query) {
+    return function (user) {
+        return query === user.name;
+    }
+}
+
 export default class App extends React.Component {
 
     constructor(props) {
@@ -26,7 +32,7 @@ export default class App extends React.Component {
             <div>
                 <ul>
                     {users
-                        .filter(user => this.state.query === user.name)
+                        .filter(doFilter(this.state.query))
                         .map(myuser => <li>{myuser.name}</li>)
                     }
                 </ul>
