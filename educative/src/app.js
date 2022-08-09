@@ -1,43 +1,53 @@
 import React from 'react';
 
-const doFilter = query => user =>
-    query === user.name;
+const App = () => {
+    const stories = [
+        {
+            title: 'React',
+            url: 'https://reactjs.org/',
+            author: 'Jordan Walke',
+            num_comments: 3,
+            points: 4,
+            objectID: 0,
+        },
+        {
+            title: 'Redux',
+            url: 'https://redux.js.org/',
+            author: 'Dan Abramov, Andrew Clark',
+            num_comments: 2,
+            points: 5,
+            objectID: 1,
+        },
+    ];
 
-export default class App extends React.Component {
+    const handleChange = event => {
+        console.log(event.target.value);
+    };
 
-    constructor(props) {
-        super(props);
+    return (
+        <div>
+            <h1>My Hacker Stories</h1>
 
-        this.state = {
-            query: '',
-        };
+            <label htmlFor="search">Search: </label>
+            <input id="search" type="text" onChange={handleChange}/>
 
-        this.onChange = this.onChange.bind(this);
-    }
+            <hr/>
 
-    onChange(event) {
-        this.setState({query: event.target.value});
-    }
+            <List list={stories}/>
+        </div>
+    );
+};
 
-    render() {
-        const users = [
-            {name: 'Robin'},
-            {name: 'Markus'},
+const List = props =>
+    props.list.map(item => (
+        <div key={item.objectID}>
+      <span>
+        <a href={item.url}>{item.title}</a>
+      </span>
+            <span>{item.author}</span>
+            <span>{item.num_comments}</span>
+            <span>{item.points}</span>
+        </div>
+    ));
 
-        ];
-        return (
-            <div>
-                <ul>
-                    {users
-                        .filter(doFilter(this.state.query))
-                        .map(myuser => <li>{myuser.name}</li>)
-                    }
-                </ul>
-                <input
-                    type="text"
-                    onChange={this.onChange}
-                />
-            </div>
-        );
-    }
-}
+export default App;
