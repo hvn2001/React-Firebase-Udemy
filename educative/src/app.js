@@ -1,23 +1,16 @@
 import React from 'react';
 
-const list = [
-    {
-        title: 'React',
-        url: 'https://reactjs.org/',
-        author: 'Jordan Walke',
-        num_comments: 3,
-        points: 4,
-        objectID: 0,
-    },
-    {
-        title: 'Redux',
-        url: 'https://redux.js.org/',
-        author: 'Dan Abramov, Andrew Clark',
-        num_comments: 2,
-        points: 5,
-        objectID: 1,
-    },
-];
+class Developer {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    getName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+}
+
 
 function App() {
     return (
@@ -29,24 +22,29 @@ function App() {
 
             <hr/>
 
+            {/* creating an instance of List component */}
+            <List/>
+            {/* creating another instance of List component */}
             <List/>
         </div>
     );
 }
 
+// definition of List component
 function List() {
-    return list.map(function (item) {
-        return (
-            <div key={item.objectID}>
-        <span>
-          <a href={item.url}>{item.title}</a>
-        </span>
-                <span>{item.author}</span>
-                <span>{item.num_comments}</span>
-                <span>{item.points}</span>
-            </div>
-        );
-    });
+    // class instantiation
+    const robin = new Developer('Robin', 'Wieruch');
+
+    // another class instantiation
+    const dennis = new Developer('Dennis', 'Wieruch');
+
+    return (
+        <div>
+            {robin.getName()};
+            {dennis.getName()};
+
+        </div>
+    );
 }
 
 export default App;
