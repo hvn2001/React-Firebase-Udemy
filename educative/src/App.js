@@ -5,7 +5,8 @@ require('./App.css');
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_HPP = '100';
 
-const PATH_BASE = 'https://hn.algolia.com/api/v1';
+// const PATH_BASE = 'https://hn.algolia.com/api/v1';
+const PATH_BASE = 'https://hn.mydomain.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
@@ -19,6 +20,7 @@ class App extends Component {
             result: null,
             searchTerm: DEFAULT_QUERY,
             searchKey: '',
+            error: null,
         };
         this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
         this.setSearchTopStories = this.setSearchTopStories.bind(this);
@@ -57,7 +59,7 @@ class App extends Component {
         fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}`)
             .then(response => response.json())
             .then(result => this.setSearchTopStories(result))
-            .catch(e => e);
+            .catch(error => this.setState({error}));
     }
 
     componentDidMount() {
@@ -98,7 +100,8 @@ class App extends Component {
         const {
             searchTerm,
             results,
-            searchKey
+            searchKey,
+            error
         } = this.state;
 
         const page = (
@@ -124,10 +127,15 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Table
-                    list={list}
-                    onDismiss={this.onDismiss}
-                />
+                {error
+                    ? <div className="interactions">
+                        <p>Something went wrong.</p>
+                    </div>
+                    : <Table
+                        list={list}
+                        onDismiss={this.onDismiss}
+                    />
+                }
                 <div className="interactions">
                     <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
                         More
