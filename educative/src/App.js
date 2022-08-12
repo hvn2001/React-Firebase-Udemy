@@ -21,8 +21,8 @@ class App extends Component {
             searchKey: '',
         };
         this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
-        this.setSearchTopstories = this.setSearchTopstories.bind(this);
-        this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
+        this.setSearchTopStories = this.setSearchTopStories.bind(this);
+        this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
@@ -32,7 +32,7 @@ class App extends Component {
         return !this.state.results[searchTerm];
     }
 
-    setSearchTopstories(result) {
+    setSearchTopStories(result) {
         const {hits, page} = result;
         const {searchKey, results} = this.state;
 
@@ -53,17 +53,17 @@ class App extends Component {
         });
     }
 
-    fetchSearchTopstories(searchTerm, page = 0) {
+    fetchSearchTopStories(searchTerm, page = 0) {
         fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}`)
             .then(response => response.json())
-            .then(result => this.setSearchTopstories(result))
+            .then(result => this.setSearchTopStories(result))
             .catch(e => e);
     }
 
     componentDidMount() {
         const {searchTerm} = this.state;
         this.setState({searchKey: searchTerm});
-        this.fetchSearchTopstories(searchTerm);
+        this.fetchSearchTopStories(searchTerm);
     }
 
     onSearchChange(event) {
@@ -74,7 +74,7 @@ class App extends Component {
         const {searchTerm} = this.state;
         this.setState({searchKey: searchTerm});
         if (this.needsToSearchTopStories(searchTerm)) {
-            this.fetchSearchTopstories(searchTerm);
+            this.fetchSearchTopStories(searchTerm);
         }
         event.preventDefault();
     }
@@ -129,7 +129,7 @@ class App extends Component {
                     onDismiss={this.onDismiss}
                 />
                 <div className="interactions">
-                    <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+                    <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
                         More
                     </Button>
                 </div>
