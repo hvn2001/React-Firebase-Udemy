@@ -23,27 +23,25 @@ const SORTS = {
 };
 
 const updateSearchTopStoriesState = (hits, page) => (prevState) => {
-    return prevState => {
-        const {searchKey, results} = prevState;
+    const {searchKey, results} = prevState;
 
-        const oldHits = results && results[searchKey]
-            ? results[searchKey].hits
-            : [];
+    const oldHits = results && results[searchKey]
+        ? results[searchKey].hits
+        : [];
 
-        const updatedHits = [
-            ...oldHits,
-            ...hits
-        ];
+    const updatedHits = [
+        ...oldHits,
+        ...hits
+    ];
 
-        return {
-            results: {
-                ...results,
-                [searchKey]: {hits: updatedHits, page}
-            },
-            isLoading: false
-        };
+    return {
+        results: {
+            ...results,
+            [searchKey]: {hits: updatedHits, page}
+        },
+        isLoading: false
     };
-}
+};
 
 class App extends Component {
 
