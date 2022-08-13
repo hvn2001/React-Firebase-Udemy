@@ -22,7 +22,7 @@ const SORTS = {
     POINTS: list => sortBy(list, 'points').reverse(),
 };
 
-function updateSearchTopStoriesState(hits, page) {
+const updateSearchTopStoriesState = (hits, page) => (prevState) => {
     return prevState => {
         const {searchKey, results} = prevState;
 
