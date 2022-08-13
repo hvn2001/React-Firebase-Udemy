@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios";
 import PropTypes from 'prop-types';
 import {sortBy} from 'lodash';
-
+import classNames from 'classnames';
 require('./App.css');
 
 const DEFAULT_QUERY = 'redux';
@@ -262,14 +262,15 @@ Button.defaultProps = {
 };
 
 const Sort = ({sortKey, activeSortKey, onSort, children}) => {
-    const sortClass = ['button-inline'];
-    if (sortKey === activeSortKey) {
-        sortClass.push('button-active');
-    }
+    const sortClass = classNames(
+        'button-inline',
+        {'button-active': sortKey === activeSortKey}
+    );
+
     return (
         <Button
             onClick={() => onSort(sortKey)}
-            className={sortClass.join(' ')}
+            className={sortClass}
         >
             {children}
         </Button>
