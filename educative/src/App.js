@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import PropTypes from 'prop-types';
 
 require('./App.css');
 
@@ -185,5 +186,15 @@ const Button = ({onClick, className = '', children}) =>
             type="button">
         {children}
     </button>
+
+Button.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    children: PropTypes.node.isRequired,
+};
+
+Button.defaultProps = {
+    className: 'Y',
+};
 
 export default App;
