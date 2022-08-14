@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Profile from "./Profile";
+import {UserContext} from "./UserContext";
 
 const conner = {
     name: 'Conner',
@@ -23,7 +24,11 @@ export default function App() {
     }
     return (
         <main>
-            <Profile user={user}/>
+            <UserContext.Provider
+                value={user}>
+                <Profile/>
+            </UserContext.Provider>
+
             <button onClick={toggleUser}>Toggle User</button>
         </main>
     );
