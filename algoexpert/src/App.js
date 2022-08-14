@@ -1,36 +1,23 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import Profile from "./Profile";
-import {UserContext} from "./UserContext";
-
-const conner = {
-    name: 'Conner',
-    course: 'FrontendExpert'
-}
-const clement = {
-    name: 'Clement',
-    course: 'AlgoExpert'
-}
-
+import {UserContext, UserContextProvider} from "./UserContext";
 
 export default function App() {
-    const [user, setUser] = useState(conner)
-
-    const toggleUser = () => {
-        if (user === conner) {
-            setUser(clement);
-        } else {
-            setUser(conner);
-        }
-    }
     return (
         <main>
-            <UserContext.Provider
-                value={user}>
-                <Profile/>
-            </UserContext.Provider>
-
-            <button onClick={toggleUser}>Toggle User</button>
+            <UserContextProvider>
+                <AppInternal/>
+            </UserContextProvider>
         </main>
     );
 }
 
+function AppInternal() {
+    const {toggleUser} = useContext(UserContext);
+    return (
+        <>
+            <Profile/>
+            <button onClick={toggleUser}>Toggle User</button>
+        </>
+    )
+}
