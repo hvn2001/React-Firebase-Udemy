@@ -1,16 +1,16 @@
-import React, {useRef, forwardRef} from 'react';
+import React, {forwardRef} from 'react';
 
 export default function App() {
-    const inputRef = useRef(null);
-    const focusInput = () => {
-        inputRef.current.focus()
-    }
     return (
         <>
-            <MyInput ref={inputRef}/>
-            <button onClick={focusInput}>Focus</button>
+            <MyInput ref={handleRef}/>
+            {/*<button onClick={focusInput}>Focus</button>*/}
         </>
     )
+}
+
+function handleRef(domNode) {
+    console.log(domNode);
 }
 
 const MyInput = forwardRef(function (props, ref) {
