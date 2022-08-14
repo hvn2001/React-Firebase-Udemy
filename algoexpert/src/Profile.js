@@ -1,14 +1,12 @@
 import WelcomeBanner from "./WelcomeBanner";
 import Course from "./Course";
-import React, {useContext} from "react";
-import {UserContext} from "./UserContext";
+import React from "react";
 
 export default function Profile() {
-    const user = useContext(UserContext)
     return (
         <>
-            <WelcomeBanner user={user}/>
-            <Course user={user}/>
+            <WelcomeBanner/>
+            <Course/>
         </>
     )
 }
