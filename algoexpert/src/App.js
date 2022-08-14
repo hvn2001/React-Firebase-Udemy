@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, forwardRef} from 'react';
 
 export default function App() {
     const inputRef = useRef(null);
@@ -7,8 +7,12 @@ export default function App() {
     }
     return (
         <>
-            <input ref={inputRef}/>
+            <MyInput ref={inputRef}/>
             <button onClick={focusInput}>Focus</button>
         </>
     )
 }
+
+const MyInput = forwardRef(function (props, ref) {
+    return <input ref={ref} {...props} style={{color: 'red'}}/>
+})
