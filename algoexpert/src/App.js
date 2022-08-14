@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import Counter from "./Counter";
+import React, {useRef, useState} from 'react';
 
 export default function App() {
-    const [isShown, setIsShown] = useState(true);
+    const inputRef = useRef(null);
+    const focusInput = () => {
+        inputRef.current.focus()
+    }
     return (
         <>
-            <button onClick={() => setIsShown(!isShown)}>
-                {isShown ? 'Hide Counter' : 'Show Counter'}
-            </button>
-            {isShown ? <Counter/> : null}
+            <input ref={inputRef}/>
+            <button onClick={focusInput}>Focus</button>
         </>
-    );
+    )
 }
