@@ -1,13 +1,18 @@
-import React, {forwardRef} from 'react';
+import React, {useRef} from 'react';
 import Counter from "./Counter";
 import CustomInput from "./CustomInput";
 
 export default function App() {
+    const counterRef = useRef();
+    const customInputRef = useRef();
     return (
         <>
-            <Counter/>
-            <CustomInput placeholder="Type something..."/>
-            <button>
+            <Counter ref={counterRef}/>
+            <CustomInput ref={customInputRef} placeholder="Type something..."/>
+            <button onClick={() => {
+                counterRef.current.reset();
+                customInputRef.current.reset();
+            }}>
                 Reset
             </button>
 
