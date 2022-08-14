@@ -1,21 +1,31 @@
-import React, {useRef} from 'react';
-import Counter from "./Counter";
-import CustomInput from "./CustomInput";
+import React, {useState} from "react";
+import Profile from "./Profile";
+
+const conner = {
+    name: 'Conner',
+    course: 'FrontendExpert'
+}
+const clement = {
+    name: 'Clement',
+    course: 'AlgoExpert'
+}
+
 
 export default function App() {
-    const counterRef = useRef();
-    const customInputRef = useRef();
-    return (
-        <>
-            <Counter ref={counterRef}/>
-            <CustomInput ref={customInputRef} placeholder="Type something..."/>
-            <button onClick={() => {
-                counterRef.current.reset();
-                customInputRef.current.reset();
-            }}>
-                Reset
-            </button>
+    const [user, setUser] = useState(conner)
 
-        </>
-    )
+    const toggleUser = () => {
+        if (user === conner) {
+            setUser(clement);
+        } else {
+            setUser(conner);
+        }
+    }
+    return (
+        <main>
+            <Profile user={user}/>
+            <button onClick={toggleUser}>Toggle User</button>
+        </main>
+    );
 }
+
