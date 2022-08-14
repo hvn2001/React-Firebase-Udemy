@@ -1,18 +1,21 @@
 import React, {useRef, useState} from 'react';
 
-    export default function App() {
+export default function App() {
     const [seconds, setSeconds] = useState(0);
-    const [timerID, setTimerID] = useState({current: null});
+    // const [timerID, setTimerID] = useState({current: null});
+    let timerID;
     // const timerID = useRef(null);
+    console.log('timerID', timerID);
 
     const startTimer = () => {
-        timerID.current = setInterval(() => {
+        console.log('startTimer');
+        timerID = setInterval(() => {
             setSeconds(currSeconds => currSeconds + 1);
-        }, 500);
+        }, 1000);
     };
 
     const stopTimer = () => {
-        clearInterval(timerID.current);
+        clearInterval(timerID);
     };
 
     return (
