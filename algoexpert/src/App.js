@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import MyButton from "./MyButton";
 
 
@@ -12,10 +12,8 @@ export default function App() {
         return fib(num);
     }, [num]); // fib(num) is depended on num only
 
-    const onClickLog = useMemo(() => {
-        return () => {
-            console.log(logValue)
-        };
+    const onClickLog = useCallback(() => {
+        console.log(logValue);
     }, [logValue]);
 
 
