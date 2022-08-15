@@ -10,7 +10,7 @@ export default function App() {
     const fibValue = useMemo(() => {
         console.log('calculating fib value');
         return fib(num);
-    }, [num]);
+    }, [num]); // fib(num) is depended on num only
 
     return (
         <>
@@ -37,7 +37,6 @@ export default function App() {
 }
 
 function fib(n) {
-    console.log('fib')
     if (n === 2) return 1;
     if (n === 1) return 0;
     return fib(n - 1) + fib(n - 2);
