@@ -12,6 +12,13 @@ export default function App() {
         return fib(num);
     }, [num]); // fib(num) is depended on num only
 
+    const onClickLog = useMemo(() => {
+        return () => {
+            console.log(logValue)
+        };
+    }, [logValue]);
+
+
     return (
         <>
             <h1>
@@ -29,9 +36,7 @@ export default function App() {
                 onChange={event => setLogValue(event.target.value)}
             />
 
-            <MyButton onClick={() => {
-                console.log(logValue)
-            }}>Log Value</MyButton>
+            <MyButton onClick={onClickLog}>Log Value</MyButton>
         </>
     );
 }
