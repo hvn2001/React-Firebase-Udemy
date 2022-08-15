@@ -3,7 +3,9 @@ import React, {useEffect, useState} from "react";
 let renderCount = 0;
 
 export default function App() {
-    renderCount++;
+    useEffect(() => {
+        renderCount++;
+    })
     return (
         <>
             <Counter initialValue={5}/>
