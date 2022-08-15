@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import MyButton from "./MyButton";
 
 
@@ -7,11 +7,15 @@ export default function App() {
     const [num, setNum] = useState(10);
     const [logValue, setLogValue] = useState('');
 
+    const fibValue = useMemo(() => {
+        console.log('calculating fib value');
+        return fib(num);
+    }, [num]);
 
     return (
         <>
             <h1>
-                Fib {num} is {fib(num)}
+                Fib {num} is {fibValue}
             </h1>
             <input
                 type="number"
@@ -33,6 +37,7 @@ export default function App() {
 }
 
 function fib(n) {
+    console.log('fib')
     if (n === 2) return 1;
     if (n === 1) return 0;
     return fib(n - 1) + fib(n - 2);
