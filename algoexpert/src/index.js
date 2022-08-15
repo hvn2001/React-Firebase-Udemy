@@ -5,6 +5,8 @@ import App from './App.js';
 require('./index.css');
 
 ReactDOM.render(
-    <App/>,
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>,
     document.getElementById('content')
 );

@@ -1,10 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+
+let renderCount = 0;
 
 export default function App() {
+    renderCount++;
     return (
         <>
             <Counter initialValue={5}/>
             <Counter/>
+            <p>Render count: {renderCount}</p>
         </>
     );
 }
