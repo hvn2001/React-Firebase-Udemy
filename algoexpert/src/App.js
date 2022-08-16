@@ -1,28 +1,15 @@
-import React, {useEffect, useState} from "react";
-
-let renderCount = 0;
+import React from "react";
 
 export default function App() {
-    useEffect(() => {
-        renderCount++;
-    })
     return (
         <>
-            <Counter initialValue={5}/>
-            <Counter/>
-            <p>Render count: {renderCount}</p>
+            <h1>Hello World</h1>
+            <Buggy/>
         </>
     );
 }
 
-function Counter({initialValue = 0}) {
-    const [count, setCount] = useState(initialValue);
-    return (
-        <>
-            <button onClick={() => setCount(count + 1)}>
-                Increment
-            </button>
-            <p>Count: {count}</p>
-        </>
-    )
+function Buggy() {
+    throw new Error('error');
+    return <h1>Buggy</h1>;
 }
