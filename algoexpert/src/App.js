@@ -1,7 +1,7 @@
 import './App.css';
-import React, {useCallback, useMemo, useState} from "react";
-import MyButton from "./MyButton";
+import React, {lazy, useCallback, useMemo, useState, Suspense} from "react";
 
+const MyButton = lazy(() => import('./MyButton'));
 
 export default function App() {
     const [num, setNum] = useState(10);
@@ -33,8 +33,15 @@ export default function App() {
                 value={logValue}
                 onChange={event => setLogValue(event.target.value)}
             />
-
-            <MyButton onClick={onClickLog}>Log Value</MyButton>
+            {
+                logValue.length > 0 ?
+                    (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <MyButton onClick={onClickLog}>Log Value</MyButton>
+                        </Suspense>
+                    ) :
+                    null
+            }
         </>
     );
 }
