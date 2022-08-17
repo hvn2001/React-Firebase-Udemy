@@ -181,17 +181,9 @@ const InputWithLabel = ({
     );
 };
 
-function getTheTruth() {
-    if (console.log('B:List')) {
-        return true;
-    } else {
-        return false;
-    }
-}
+const List = React.memo(({list, onRemoveItem}) =>
 
-const List = ({list, onRemoveItem}) =>
-
-    console.log(getTheTruth()) ||
+    console.log('B:List') ||
 
     list.map(item => (
         <Item
@@ -199,7 +191,8 @@ const List = ({list, onRemoveItem}) =>
             item={item}
             onRemoveItem={onRemoveItem}
         />
-    ));
+    ))
+);
 
 const Item = ({item, onRemoveItem}) => (
     <div>
