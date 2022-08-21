@@ -3,14 +3,13 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDCeOytuIxNGchrGq4CrZq4cpohiIX9uYg",
-  authDomain: "testing-123-c16fc.firebaseapp.com",
-  projectId: "testing-123-c16fc",
-  storageBucket: "testing-123-c16fc.appspot.com",
-  messagingSenderId: "934001709223",
-  appId: "1:934001709223:web:3a1ce8022d26e440b30b82",
-  measurementId: "G-3L5DFDF70R"
-}
+  apiKey: "AIzaSyDEunEWU44yfv001XiS7wgnB7Dz4fIel_c",
+  authDomain: "thaomoneyapp.firebaseapp.com",
+  projectId: "thaomoneyapp",
+  storageBucket: "thaomoneyapp.appspot.com",
+  messagingSenderId: "553904200576",
+  appId: "1:553904200576:web:63d50bf7c3a1719c6e7f65"
+};
 
 // init firebase
 firebase.initializeApp(firebaseConfig)
