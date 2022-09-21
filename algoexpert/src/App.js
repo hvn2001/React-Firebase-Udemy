@@ -1,50 +1,107 @@
-import React, {useState} from 'react';
+// Copyright © 2022 AlgoExpert LLC. All rights reserved.
 
-export default function TipCalculator() {
-    const [bill, setBill] = useState(50);
-    const [tipPercentage, setTipPercentage] = useState(18);
-    const [people, setPeople] = useState(1);
+import React, {useEffect, useState} from 'react';
 
-    const totalTip = (bill * tipPercentage) / 100;
-    const perPersonTip = totalTip / people;
+const QUESTIONS_API_BASE_URL = 'https://api.frontendexpert.io/api/fe/questions';
+const SUBMISSIONS_API_BASE_URL = 'https://api.frontendexpert.io/api/fe/submissions';
+
+export default function QuestionList() {
+    const [questions, submissions] = useQuestionsAndSubmissions();
+    const questionsByCategory = getQuestionsByCategory(questions);
+    const submissionsByQuestion = getSubmissionsByQuestion(submissions);
+    const categories = Object.keys(questionsByCategory);
 
     return (
         <>
-            <label htmlFor="bill">Bill</label>
-            <input
-                id="bill"
-                type="number"
-                min="0"
-                value={bill}
-                onChange={event => {
-                    setBill(parseInt(event.target.value));
-                }}
-            />
-
-            <label htmlFor="tipPercentage">Tip Percentage</label>
-            <input
-                id="tipPercentage"
-                type="number"
-                min="0"
-                value={tipPercentage}
-                onChange={event => {
-                    setTipPercentage(parseInt(event.target.value));
-                }}
-            />
-
-            <label htmlFor="people">Number of People</label>
-            <input
-                id="people"
-                type="number"
-                min="1"
-                value={people}
-                onChange={event => {
-                    setPeople(parseInt(event.target.value));
-                }}
-            />
-
-            <p>Total Tip: {isNaN(totalTip) ? '-' : `$${totalTip.toFixed(2)}`}</p>
-            <p>Tip Per Person: {isNaN(perPersonTip) ? '-' : `$${perPersonTip.toFixed(2)}`}</p>
+            {categories.map(category => (
+                <Category
+                    key={category}
+                    category={category}
+                    questions={questionsByCategory[category]}
+                    submissionsByQuestion={submissionsByQuestion}
+                />
+            ))}
         </>
     );
+}
+
+function Category({category, questions, submissionsByQuestion}) {
+    const totalQuestions = questions.length;
+    const numQuestionsCorrect = questions.reduce((sum, question) => {
+        return submissionsByQuestion[question.id] === 'CORRECT' ? sum + 1 : sum;
+    }, 0);
+
+    return (
+        <div className="category">
+            <h2>
+                {category} - {numQuestionsCorrect} / {totalQuestions}
+            </h2>
+            {questions.map(question => (
+                <Question
+                    key={question.id}
+                    question={question}
+                    submissionsByQuestion={submissionsByQuestion}
+                />
+            ))}
+        </div>
+    );
+}
+
+function Question({question, submissionsByQuestion}) {
+    const submissionStatus = submissionsByQuestion[question.id];
+    const statusClass =
+        submissionStatus == null ? 'unattempted' : submissionStatus.toLowerCase().replace('_', '-');
+
+    return (
+        <div className="question">
+            <div className={`status ${statusClass}`}/>
+            <h3>{question.name}</h3>
+        </div>
+    );
+}
+
+function useQuestionsAndSubmissions() {
+    const [questions, setQuestions] = useState([]);
+    const [submissions, setSubmissions] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const [questionsResponse, submissionsResponse] = await Promise.all([
+                fetch(QUESTIONS_API_BASE_URL),
+                fetch(SUBMISSIONS_API_BASE_URL),
+            ]);
+            const [questions, submissions] = await Promise.all([
+                questionsResponse.json(),
+                submissionsResponse.json(),
+            ]);
+
+            setQuestions(questions);
+            setSubmissions(submissions);
+        };
+
+        fetchData();
+    }, []);
+
+    return [questions, submissions];
+}
+
+function getQuestionsByCategory(questions) {
+    const questionsByCategory = {};
+    questions.forEach(({category, ...question}) => {
+        if (!questionsByCategory.hasOwnProperty(category)) {
+            questionsByCategory[category] = [];
+        }
+        questionsByCategory[category].push(question);
+    });
+
+    return questionsByCategory;
+}
+
+function getSubmissionsByQuestion(submissions) {
+    const submissionsByQuestion = {};
+    submissions.forEach(({questionId, status}) => {
+        submissionsByQuestion[questionId] = status;
+    });
+
+    return submissionsByQuestion;
 }
