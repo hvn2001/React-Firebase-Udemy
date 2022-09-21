@@ -1,21 +1,50 @@
 import React, {useState} from 'react';
 
-export default function App() {
-    const [count, setCount] = useState(0);
+export default function TipCalculator() {
+    const [bill, setBill] = useState(50);
+    const [tipPercentage, setTipPercentage] = useState(18);
+    const [people, setPeople] = useState(1);
+
+    const totalTip = (bill * tipPercentage) / 100;
+    const perPersonTip = totalTip / people;
+
     return (
         <>
-            <Counter counter={count} setCount={setCount}/>
+            <label htmlFor="bill">Bill</label>
+            <input
+                id="bill"
+                type="number"
+                min="0"
+                value={bill}
+                onChange={event => {
+                    setBill(parseInt(event.target.value));
+                }}
+            />
+
+            <label htmlFor="tipPercentage">Tip Percentage</label>
+            <input
+                id="tipPercentage"
+                type="number"
+                min="0"
+                value={tipPercentage}
+                onChange={event => {
+                    setTipPercentage(parseInt(event.target.value));
+                }}
+            />
+
+            <label htmlFor="people">Number of People</label>
+            <input
+                id="people"
+                type="number"
+                min="1"
+                value={people}
+                onChange={event => {
+                    setPeople(parseInt(event.target.value));
+                }}
+            />
+
+            <p>Total Tip: {isNaN(totalTip) ? '-' : `$${totalTip.toFixed(2)}`}</p>
+            <p>Tip Per Person: {isNaN(perPersonTip) ? '-' : `$${perPersonTip.toFixed(2)}`}</p>
         </>
     );
 }
-
-const Counter = (props) =>
-    <>
-        <button onClick={() => {
-            // props.counter = props.counter + 1;
-            props.setCount(props.counter + 1);
-            // console.log('counter = ', props.counter);
-        }}>Increment
-        </button>
-        <p>Count: {props.counter}</p>
-    </>
